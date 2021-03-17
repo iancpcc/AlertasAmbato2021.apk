@@ -1,0 +1,49 @@
+.mapa {
+  width: 100%;
+  height: 50%;
+}
+
+.ion-bold {
+  font-weight: bold;
+}
+// ion-list{
+//     box-shadow: 2px 2px 41px -6px rgba(0,0,0,0.49);
+
+// }
+
+.centrar {
+  display: block;
+  margin: auto;
+  width: 85%;
+}
+
+ion-item {
+  margin: auto;
+  border: 1px solid rgba(20, 19, 20, 0.09);
+
+  border-radius: 10px;
+  height: 50px;
+  // box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.05);
+  margin: 5px;
+  margin-top: 5px;
+
+  ion-input {
+    font-size: 15px;
+    --padding-start: 5px;
+    // font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(61, 71, 78);
+  }
+}
+
+ion-label {
+  font-size: 17px;
+  padding-left: 10px;
+  font-family: "Truculenta";
+  color: rgb(67, 74, 78);
+}
+.ion-bold{
+    font-size: 17px;
+    padding-left: 10px;
+    font-family: "Truculenta";
+    color: rgb(67, 74, 78);
+  }

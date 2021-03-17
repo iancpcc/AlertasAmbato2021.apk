@@ -1,0 +1,112 @@
+<ion-content class="ion-padding-top">
+  <ion-segment [value]="cambioComponente" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="perfil">
+      <ion-label class="ion-font">Perfil</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="contactos">
+      <ion-label class="ion-font">Contactos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  
+  <!-- Perfil -->
+  <ion-list  *ngIf="cambioComponente=='perfil'">
+    <ion-card class="ion-margin-top encabezado">
+      <ion-avatar>
+        <img src="../../../assets/img/team.png">
+      </ion-avatar>
+
+      <ion-card-header >
+        <ion-card-subtitle class="ion-text-center Title">{{ciudadano.nombre +" "+ciudadano.apellido}}</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-button (click)="exit()"  fill="clear" size="small" shape="round">
+        <ion-icon  slot="start" color="primary"   name="log-out-outline"></ion-icon>
+      </ion-button>
+  
+    </ion-card>
+  <ion-list-header class="ion-text-center" >
+    <ion-label class="tituto">Mis Datos</ion-label>
+  </ion-list-header>
+
+  <ion-card >
+    <ion-card-content class="mainContent">
+      <ion-item  lines="none">
+         <ion-label  >Cédula :</ion-label>
+        <ion-input type="text" 
+        name="cedula"
+        readonly
+        [(ngModel)]="ciudadano.cedula"
+        placeholder="Cédula"></ion-input>
+      </ion-item>
+      <ion-item  lines="none">
+        <ion-label  >Dirección :</ion-label>
+        <ion-input type="text" 
+        name="direccion"
+        readonly
+        [(ngModel)]="ciudadano.direccion"
+        placeholder="Direccion"></ion-input>
+      </ion-item>
+      <ion-item  lines="none"  >
+        <ion-label  >Correo :</ion-label>
+        <ion-input type="text" 
+        name="correo"
+        readonly
+        [(ngModel)]="ciudadano.email"
+        placeholder="Correo"></ion-input>
+      </ion-item>
+      <ion-item    lines="none">
+    <ion-label  >Teléfono :</ion-label>
+        <ion-input type="text" 
+        name="telefono"
+        readonly
+        [(ngModel)]="ciudadano.telefono"
+        placeholder="Teléfono"></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+</ion-list>
+
+  <!-- Fin perfil -->
+
+<!-- Contactos -->
+<ion-list *ngIf="cambioComponente=='contactos'" class="ion-padding-top" >
+  <ion-list-header>
+    <ion-label class="ion-font" >Contactos({{contactos.length}}/5)
+
+    </ion-label>
+
+      <ion-button (click)="eliminarTodo()" >
+        <ion-icon color="danger" slot="end" name="trash"></ion-icon>
+      </ion-button>
+
+  </ion-list-header>
+
+  <ion-item-sliding *ngFor="let contact of contactos" #ionSliding (click)="abrirSlide(ionSliding)"  >
+    <ion-item >
+      <ion-avatar slot="start">
+        <img src="../../../assets/img/profile.png">
+      </ion-avatar>
+      <ion-label >
+        <h2 class="ion-font" >{{contact["nombre"]}}</h2>
+      <h3 class="ion-font">{{contact["numero"]}}</h3>
+      </ion-label>
+    </ion-item>
+
+    <ion-item-options side="end"  >
+      <ion-item-option color="danger" (click)="eliminar(contact['numero'])"> 
+        <ion-icon name="trash" ></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+   
+  </ion-item-sliding>
+ 
+</ion-list>
+<!-- Boton Agregar -->
+<ion-fab *ngIf="cambioComponente=='contactos'" vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button color="primary" (click)="presentPopover($event)">
+    <ion-icon name="add" color="light"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+</ion-content>

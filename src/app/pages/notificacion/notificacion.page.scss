@@ -1,0 +1,35 @@
+.mapa{
+    width: 100%;
+    height: 50%;
+}
+ion-label{
+    font-size: 17px;
+    padding-left: 10px;
+    font-family: "Truculenta";
+    color: rgb(67, 74, 78);
+    }
+
+    ion-item {
+        margin:auto;
+        border: 1px solid rgba(20, 19, 20, 0.09);
+        
+          border-radius: 10px;
+          height: 50px;
+          // box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.05);
+          margin: 10px;
+          margin-top: 10px;
+          ion-input {
+            font-size: 15px;
+           --padding-start: 5px;
+          // font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: rgb(61, 71, 78);
+      
+          }
+      }
+
+      .ion-bold{
+        font-size: 17px;
+        padding-left: 10px;
+        font-family: "Truculenta";
+        color: rgb(67, 74, 78);
+      }

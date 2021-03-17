@@ -1,0 +1,44 @@
+<ion-content class="ion-padding">
+  <ion-list >
+    <ion-item>
+      <ion-label position="floating" class="tituto">Ubicación</ion-label>
+      <span class="subtitle"
+        >(Pulse el botón para obtener su ubicación actual)</span
+      >
+      <ion-input
+        class="ion-no-border ion-font"
+        [(ngModel)]="ciudadano.ubicacion.coordinates"
+        readonly
+      >
+      </ion-input>
+      <ion-buttons slot="end" class="ion-padding-top">
+        <ion-spinner name="lines-small" *ngIf="cargandoGeo"></ion-spinner>
+        <ion-toggle
+          [(ngModel)]="buscarPosicion"
+          (ionChange)="obtenerPosicion()"
+        ></ion-toggle>
+      </ion-buttons>
+    </ion-item>
+
+  </ion-list>
+  <ion-list class="ion-padding-top">
+    <ion-item>
+      <ion-label position="floating" class="tituto">Distancia</ion-label>
+      <span class="subtitle">(Metros)</span>
+      <ion-input
+      class="ion-font"
+        type="number"
+        inputmode="numeric"
+        [(ngModel)]="radio"
+        placeholder="Distancia en metros"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+  <img
+    src="../../../assets/img/sos2.jpg"
+    (click)="actionHelp()"
+    class="alertbutton"
+    #imgPanic
+  />
+  
+</ion-content>

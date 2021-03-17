@@ -1,0 +1,150 @@
+<ion-content>
+  <div class="header" style="padding-top: 30px">
+    <ion-buttons slot="start">
+      <ion-button (click)="regresar()">
+        <ion-icon
+          style="font-size: 20px"
+          slot="start"
+          color="light"
+          name="chevron-back-outline"
+        ></ion-icon>
+        <span style="color: white">Regresar</span>
+      </ion-button>
+    </ion-buttons>
+    <div class="circulo"></div>
+    <div class="circulo2"></div>
+    <div class="circulo3"></div>
+    <ion-card class="ion-justify-content-center">
+      <div class="centerIcon">
+        <img src="../../../assets/img/register.png" />
+      </div>
+      <ion-card-header class="ion-text-center">
+        <ion-card-title>Registro</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form
+          (ngSubmit)="register()"
+          [formGroup]="miformulario"
+          autocomplete="off"
+        >
+        <!-- Nombre -->
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input type="text" formControlName="nombre"></ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('nombre')"
+            >Nombre Necesario</span
+          >
+          <!-- Apellido -->
+          <ion-item>
+            <ion-label position="floating">Apellido</ion-label>
+            <ion-input formControlName="apellido" type="text"></ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('apellido')"
+            >Apellido Necesario</span
+          >
+          <!-- Cedula -->
+          <ion-item>
+            <ion-label position="floating">Cédula</ion-label>
+            <ion-input formControlName="cedula" type="text"></ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('cedula')"
+            >{{smsErrorCedula}}</span
+          >
+          <!-- Telefono -->
+          <ion-item>
+            <ion-label position="floating">Celular</ion-label>
+            <ion-input formControlName="telefono" type="text"></ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('telefono')"
+            >Teléfono Necesario</span
+          >
+          <!-- Ubicacion -->
+          <ion-item>
+            <ion-label position="floating"
+              >Ubicación
+            </ion-label>
+            <ion-input
+              formControlName="ubicacion"
+              type="text"
+              placeholder="Presione el botón"
+              readonly
+            >
+            <!--  -->
+            </ion-input>
+            <ion-buttons slot="end" class="ion-padding-top">
+              <ion-spinner
+                slot="end"
+                name="lines-small"
+                *ngIf="cargandoGeo"
+              ></ion-spinner>
+              <ion-button
+                (click)="obtenerPosicion()"
+                expand="block"
+                fill="clear"
+                shape="round"
+              >
+                <ion-icon
+                  size="small"
+                  color="secondary"
+                  name="location-outline"
+                ></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('ubicacion')"
+            >Coordenadas Necesarias</span
+          >
+          <!-- Direccion -->
+          <ion-item>
+            <ion-label position="floating">Dirección</ion-label>
+            <ion-input
+              formControlName="direccion"
+              class="ion-no-padding"
+              type="text"
+              autocomplete="off"
+            >
+            </ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="">Dirección Necesaria</span>
+          <ion-item>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email" type="email"></ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('email')"
+            >Email Necesario</span
+          >
+          <!-- Contraseña -->
+          <ion-item>
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('password')"
+            >Contraseña Necesaria(Mínimo 6 caracteres)</span
+          >
+          <!-- Confirma -->
+          <ion-item>
+            <ion-label position="floating">Confirme Contraseña</ion-label>
+            <ion-input formControlName="password2" type="password"></ion-input>
+          </ion-item>
+          <span class="text-danger" *ngIf="camposValidos('password2')"
+            >Las contraseñas no coinciden</span
+          >
+
+          <section class="ion-padding">
+            <ion-button
+              type="submit"
+              expand="block"
+              [disabled]="miformulario.invalid"
+              color="primary"
+            >
+              Registrar
+            </ion-button>
+          </section>
+          <!-- <h5>Errores</h5>
+          <pre>{{miformulario.get("password2").errors | json}} </pre> -->
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

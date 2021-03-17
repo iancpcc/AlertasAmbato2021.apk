@@ -1,0 +1,8 @@
+{
+  "name": "alarmacomunidad",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,21 @@
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-list-header>
+      <ion-label>
+        <h2>Notificaciones Recientes</h2>
+      </ion-label>
+        <ion-button (click)="eliminar()" >
+          <ion-icon color="danger" slot="end" name="trash"></ion-icon>
+          <ion-label>Eliminar</ion-label>
+        </ion-button>
+    </ion-list-header>
+  </ion-list>
+  <span class="ion-text-center tituto" *ngIf="notificaciones.length ===0" ><h6>No hay notificaciones</h6></span>
+      <ion-item *ngFor="let item of notificaciones,let i= index" (click)="disteClick(i)">
+        <ion-label >
+          <h2 class="ion-font">{{item.payload.additionalData["nombre"]}} {{item.payload.additionalData["apellido"]}}</h2>
+          <p>{{item.fecha}} {{item.hora}}</p>
+        </ion-label>
+      </ion-item> 
+</ion-content>

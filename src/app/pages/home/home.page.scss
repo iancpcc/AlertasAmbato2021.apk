@@ -1,0 +1,44 @@
+ion-slides{
+height: 100%;
+width: 100%;    
+}
+
+
+
+a{
+  font-size: 10px;
+}
+
+.subtitle{
+  // color: #f53b57 !important;
+  padding-top: 8px;
+  font-size: 10px;
+  
+}
+
+ion-list{
+  background-color: var(--ion-color-gradient);
+}
+
+.btnPanic{
+  opacity: .2;
+}
+.alertbutton{
+  margin: auto;
+  display: block;
+  // margin-top: 10%;
+  // margin-bottom: 10%;
+  border-radius: 50%;
+  // box-shadow: -10px 10px 10px 5px #d9b4b4;
+  // border: 0px solid rgba(126, 13, 13, 0.09);
+  // background-color: red;
+}
+
+
+
+.tituto{
+  font-size: 25px  !important;
+  font-family:"Truculenta" ;
+  // border-top: 2px solid rgba(93, 91, 91, 0.05) ;
+  color: rgb(68, 77, 83);
+}

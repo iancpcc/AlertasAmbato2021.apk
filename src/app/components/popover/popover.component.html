@@ -1,0 +1,35 @@
+
+  <ion-content  class="ion-padding">
+    <ion-list-header lines="none" class="ion-no-padding" >
+      <ion-label class="ion-text-center">Nuevo Contacto</ion-label>
+      <br>
+    </ion-list-header>
+    <form
+          (ngSubmit)="guardar()"
+          [formGroup]="miformulario"
+          autocomplete="off">
+    <ion-list>
+      <ion-label >Nombre:</ion-label>
+      <ion-item lines="none" >
+        <ion-input type="text" formControlName="nombre"  ></ion-input>
+      </ion-item>
+      <ion-label >Numero:</ion-label>
+      <ion-item lines="none">
+        <ion-input type="text" name="numero" inputmode="numeric" formControlName="numero" ></ion-input>
+      </ion-item>
+      <span class="text-danger" *ngIf="camposValidos()"
+            >El contacto ya existe</span>
+    </ion-list>
+
+    <div class="btnCenter">
+
+      <ion-button type="submit" color="success" [disabled]="miformulario.invalid" size="small"  >
+        Guardar
+      </ion-button>
+      <ion-button type="button" color="danger" (click)="cancelar()" size="small" >
+        Cancelar
+      </ion-button>
+
+    </div>
+  </form>
+  </ion-content>

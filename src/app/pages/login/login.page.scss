@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+
+ion-title{
+    font-family: 'Acme', sans-serif;
+    font-size: 30px;
+}
+.Title{
+    font-family: 'Acme', sans-serif;
+    font-size: 15px;
+}
+.centerIcon img{
+ width: 50%;
+ height:  50%;
+ margin-right: 25%;
+ margin-left: 25%;
+}
+
+.separacionbtns{
+    margin-top: 30px;
+}
+ion-button {
+    margin:10px ;
+    height: 48px;
+    font-size: 18px;
+    text-transform: initial;
+    border-radius: 50px;
+    box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.05);
+    --box-shadow: none;
+  }
+ion-item {
+    border-top: 0.5px solid rgba(0, 0, 0, 0.09);
+    border-left: 0.5px solid rgba(0, 0, 0, 0.09);
+    border-radius: 50px;
+    height: 55px;
+    box-shadow: 10px 8px 8px 1px rgba(0, 0, 0, 0.08);
+    margin: 10px;
+    margin-top: 20px;
+    
+  
+    ion-input {
+      font-size: 18px;
+     --padding-start: 5px;
+    }
+    a {
+        font-size: 17px;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+      }
+      ion-icon{
+          font-size: 20px;
+          padding-top: 5px;
+          margin: 10px;
+      
+      }
+}
+.ion-text-center a{
+    text-decoration: underline  solid;  
+    margin-top: 40px !important;
+    padding-top: 40px;
+    color:  var(--ion-color-softblue);
+}
+
+.text-danger{
+    color: rgb(214, 40, 55);
+    font-size: small;
+    padding-left: 80px;
+}
+
