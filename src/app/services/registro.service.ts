@@ -23,6 +23,14 @@ export class RegistroService {
     this.cargarContactos();
   }
 
+  get ciudadanoInfo(){
+    return {...this.datosCiudadano};
+  }
+
+  set ciudadanoInfoset(ciudadano: Ciudadano){
+    this.datosCiudadano = ciudadano;
+  }
+
   async registrar(ciudadano: Ciudadano) {
     const token = await this.push.obtenerTokenDipositivo();
     ciudadano.token = token;

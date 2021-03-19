@@ -32,7 +32,11 @@ export class HomePage implements OnInit {
   buscarPosicion: boolean
 
    ngOnInit() {
-    this.ciudadano =   this.registerService.datosCiudadano|| new Ciudadano();
+    this.ciudadano =   this.registerService.ciudadanoInfo|| new Ciudadano();
+  }
+
+  ionViewWillEnter(){
+    this.ciudadano =   this.registerService.ciudadanoInfo || new Ciudadano();;
   }
 
   async presentAlert(mensaje: string, title: string, message?: string) {

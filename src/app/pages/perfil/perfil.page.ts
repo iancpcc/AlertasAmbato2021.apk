@@ -98,12 +98,17 @@ export class PerfilPage implements OnInit {
             this.exit();
             return;
           }
-          this.presentToast('Se ha actualizado los datos');
+          this.presentToast('Se ha actualizado los datos', 'success');
+          this.isEditandoUbicacion=false;
+          this.isEditando=false;
           this.ciudadano = response;
-          this, this.miformulario.reset(this.ciudadano);
+          this.miformulario.reset(this.ciudadano);
+          this.srvRegistro.ciudadanoInfoset=this.ciudadano;
         }
 
       } catch (error) {
+        this.isEditandoUbicacion=false;
+        this.isEditando=false;
         console.log('Error', error);
         this.presentToast('Error al actualizar los datos');
       }
@@ -117,12 +122,13 @@ export class PerfilPage implements OnInit {
   }
 
 
-  async presentToast(mensaje: string) {
+  async presentToast(mensaje: string, clor = "secondary") {
     const toast = await this.toastController.create({
       message: mensaje,
-      color: "secondary",
-      position: "middle",
-      duration: 2000
+      color: clor,
+      position: "bottom",
+      duration: 2000,
+      animated: true
     });
     toast.present();
   }
@@ -174,7 +180,10 @@ export class PerfilPage implements OnInit {
     };
     this.cargandoGeo = true;
     this.geolocation.getCurrentPosition(options).then((resp) => {
-      this.ciudadano.ubicacion.coordinates = [resp.coords.latitude, resp.coords.longitude];
+      const coordenadas = [resp.coords.latitude, resp.coords.longitude]
+      const formulario = this.miformulario.get("ubicacion").get("coordinates");
+      formulario.setValue(coordenadas);
+      formulario.markAsDirty();
       this.cargandoGeo = false;
 
     }, (error) => {
@@ -196,6 +205,7 @@ export class PerfilPage implements OnInit {
     this.telefonoInput.readonly = true;
     this.isEditando = false;
     this.isEditandoUbicacion = false;
+    this.miformulario.reset(this.ciudadano);
   }
 
 }
