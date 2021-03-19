@@ -21,7 +21,7 @@
       </ion-card-header>
 
       <ion-button (click)="exit()"  fill="clear" size="small" shape="round">
-        <ion-icon  slot="start" color="primary"   name="log-out-outline"></ion-icon>
+        <ion-icon class="btn-exit"  slot="start" color="primary"   name="log-out-outline"></ion-icon>
       </ion-button>
   
     </ion-card>
@@ -31,40 +31,110 @@
 
   <ion-card >
     <ion-card-content class="mainContent">
+      <form
+      (ngSubmit)="actualizar()"
+      [formGroup]="miformulario"
+      autocomplete="off">
       <ion-item  lines="none">
-         <ion-label  >Cédula :</ion-label>
-        <ion-input type="text" 
-        name="cedula"
+         <ion-label position="floating" >Cédula </ion-label>
+        <ion-input type="text"
+        #correo 
         readonly
-        [(ngModel)]="ciudadano.cedula"
+        formControlName="cedula"
         placeholder="Cédula"></ion-input>
       </ion-item>
       <ion-item  lines="none">
-        <ion-label  >Dirección :</ion-label>
-        <ion-input type="text" 
-        name="direccion"
+        <ion-label position="floating"  >Dirección </ion-label>
+        <ion-input type="text"
+        #direccion
         readonly
-        [(ngModel)]="ciudadano.direccion"
+        formControlName="direccion"
         placeholder="Direccion"></ion-input>
+        <ion-buttons slot="end">
+          <ion-button (click)="editarCampos(direccion)">
+            <ion-icon slot="start" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      
       </ion-item>
       <ion-item  lines="none"  >
-        <ion-label  >Correo :</ion-label>
-        <ion-input type="text" 
-        name="correo"
+        <ion-label position="floating"  >Correo </ion-label>
+        <ion-input type="text"
+        #email
+        formControlName="email"
         readonly
-        [(ngModel)]="ciudadano.email"
         placeholder="Correo"></ion-input>
+        <ion-buttons slot="end">
+          <ion-button (click)="editarCampos(email)">
+            <ion-icon slot="start" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      
       </ion-item>
       <ion-item    lines="none">
-    <ion-label  >Teléfono :</ion-label>
-        <ion-input type="text" 
-        name="telefono"
+    <ion-label position="floating"  >Teléfono </ion-label>
+        <ion-input type="text"
+        #telefono
+        formControlName="telefono" 
         readonly
-        [(ngModel)]="ciudadano.telefono"
         placeholder="Teléfono"></ion-input>
+        
+        <ion-buttons slot="end">
+          <ion-button (click)="editarCampos(telefono)">
+            <ion-icon slot="start" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      
+      </ion-item>
+ <ion-item   formGroupName="ubicacion" lines="none">
+    <ion-label position="floating"  >Ubicación </ion-label>
+        <ion-input type="text"
+        #ubicacion
+        name="ubicacion"
+        readonly
+        formControlName="coordinates"
+        placeholder="Ubicación"></ion-input>
+        <ion-buttons slot="end" *ngIf="!isEditandoUbicacion" >
+          <ion-button (click)="editarCampos(ubicacion); isEditandoUbicacion=true">
+            <ion-icon slot="start" name="create-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="end" *ngIf="isEditandoUbicacion" >
+          <ion-spinner
+            slot="end"
+            name="lines-small"
+            *ngIf="cargandoGeo"
+          ></ion-spinner>
+          
+          <ion-button
+            (click)="obtenerPosicion()"
+            expand="block"
+            fill="clear"
+            shape="round"
+          >
+            <ion-icon
+              size="small"
+              color="secondary"
+              name="location-outline"
+            ></ion-icon>
+          </ion-button>
+        </ion-buttons>
       </ion-item>
 
+      <div class="btnCenter" *ngIf="isEditando">
+
+        <ion-button type="submit" color="success"  size="small"  >
+          Actualizar
+        </ion-button>
+        <ion-button type="button" color="danger" (click)="cancelar()" size="small" >
+          Cancelar
+        </ion-button>
+  
+      </div>
+    </form>
     </ion-card-content>
+
   </ion-card>
 </ion-list>
 

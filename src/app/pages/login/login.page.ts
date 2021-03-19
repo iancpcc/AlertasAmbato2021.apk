@@ -19,7 +19,6 @@ export class LoginPage implements OnInit {
     private service:RegistroService,
     private alertController:AlertController,
     public loadingController: LoadingController ) { 
-      console.log('inicio logn');
     }
 
    ngOnInit() {
@@ -41,7 +40,7 @@ export class LoginPage implements OnInit {
     try {
       var valido= await this.service.loguearse(this.ciudadano);
       if(valido){
-          this.loading.dismiss();
+        this.loading.dismiss();
         await this.service.getUserData();
         this.navCtrl.navigateRoot('tabs', {animated: true});
       }

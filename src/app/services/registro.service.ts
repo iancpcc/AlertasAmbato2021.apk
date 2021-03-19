@@ -21,8 +21,6 @@ export class RegistroService {
     private storage: Storage,
   ) {
     this.cargarContactos();
-    this.getUserData();
-    
   }
 
   async registrar(ciudadano: Ciudadano) {
@@ -31,16 +29,12 @@ export class RegistroService {
     return await this.http.post<Ciudadano>(`${this.url}/auth/signup`, ciudadano).toPromise();
   }
 
-
-
-
   async cargarContactos() {
     this.contactos = await this.storage.get('contactos') || [];
     return this.contactos;
   }
 
   async getUserData() {
-
     try {
       this.userToken = await this.obtenerTokenUsuario();
       if (this.userToken) {
@@ -50,6 +44,7 @@ export class RegistroService {
         });
         const response = await this.http.get<Ciudadano>(`${this.url}/usuarios/infoUsuario`, { headers: header }).toPromise();
         this.datosCiudadano = response["data"];
+        await this.guardarInfoCiudadano();
         return this.datosCiudadano;
       }
     } catch (error) {
@@ -61,7 +56,8 @@ export class RegistroService {
 
   //TODO:Quitar token
   async loguearse(user: Usuario) {
-    user.tokenDispositivo = this.push.clave_ID || "";
+    user.tokenDispositivo = this.push.clave_ID || "b8ebde51-efea-486b-b47d-52efd0c2ceaa";
+    // user.tokenDispositivo = this.push.clave_ID || "";
     return await this.http.post(`${this.url}/auth/login`, user)
       .pipe(
         map(
@@ -80,9 +76,19 @@ export class RegistroService {
   }
 
 
-  guardarTokenUsuario(token: string) {
-    this.storage.set('userToken', token);
+  async guardarTokenUsuario(token: string) {
+    await this.storage.set('userToken', token);
   }
+
+  async guardarInfoCiudadano (){
+    await this.storage.set("ciudadano",this.datosCiudadano);
+  } 
+  
+  async obtenerInfoCiudadano (){
+    this.datosCiudadano= await this.storage.get("ciudadano");
+    return this.datosCiudadano;
+  }
+
   async obtenerTokenUsuario() {
     this.userToken = await this.storage.get('userToken')
     return this.userToken;

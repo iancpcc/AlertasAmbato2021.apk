@@ -14,6 +14,7 @@ import { ContactosService } from '../../services/contactos.service';
 
 export class HomePage implements OnInit {
   @ViewChild("imgPanic") imgPanic: ElementRef
+  
   constructor(public push: PushService,
     private registerService: RegistroService,
     private srvContantos: ContactosService,

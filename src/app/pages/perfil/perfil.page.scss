@@ -1,29 +1,23 @@
-
-
 ion-card {
   box-shadow: none;
   display: flex;
   align-items: center;
 }
-.encabezado{
- margin-top: 40px;
- margin-bottom: 30px;
+.encabezado {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  ion-button {
+    width: 50px !important;
+    height: 50px;
+    margin-right: 0 !important;
+  }
 }
 
-ion-button {
-  width: 50px !important;
-  height: 50px;
-  margin-right: 0 !important;
-}
-
-
-ion-list ion-card ion-icon{
+.btn-exit {
   font-size: 50px;
   transform: rotate(180deg);
   margin: 0;
 }
-
-
 
 ion-card ion-avatar {
   width: 100px;
@@ -38,60 +32,57 @@ ion-card ion-card-subtitle {
 ion-card ion-avatar img {
   width: 100px;
   height: 100px;
-  border: 1px solid rgb(207, 205, 205,0.5);
+  border: 1px solid rgb(207, 205, 205, 0.5);
 }
 ion-card-content {
   padding: 0px;
   width: 100%;
 }
 
-ion-button {
-  display: block;
-  margin: auto;
-  width: 30%;
-}
 ion-footer ion-toolbar ion-button ion-icon {
   font-size: 20px;
 }
 
-.mainContent{
-  ion-label{
-    font-size: 17px;
-    padding-left: 10px;
-    font-family: "Truculenta";
-    color: rgb(67, 74, 78);
-    font-weight: bold;
-    }
-}
-
-ion-segment-button .ion-font{
+ion-segment-button .ion-font {
   font-size: 20px !important;
 }
 
 .mainContent ion-item {
-  margin:auto;
+  ion-label {
+    font-size: 17px;
+    // padding-left: 10px;
+    font-family: "Truculenta";
+    color: rgb(67, 74, 78);
+    font-weight: bold;
+  }
+  margin: auto;
   border: 1px solid rgba(20, 19, 20, 0.09);
-  
-    border-radius: 10px;
-    height: 50px;
-    // box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.05);
-    margin: 10px;
-    margin-top: 20px;
-    ion-input {
-      font-size: 15px;
-     --padding-start: 5px;
-    // font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: rgb(61, 71, 78);
 
-    }
+  border-radius: 15px;
+
+  height: 60px;
+  // box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.05);
+  margin: 5px;
+  margin-top: 10px;
+  ion-input {
+    font-size: 15px;
+    --padding-start: 5px;
+    // font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(61, 71, 78);
+  }
 }
 
-.tituto{
-  font-size: 20px  !important;
-  font-family:"Truculenta" ;
-  // border-top: 2px solid rgba(93, 91, 91, 0.05) ;
+.tituto {
+  font-size: 20px !important;
+  font-family: "Truculenta";
   padding-top: 15px;
   color: rgb(68, 77, 83);
 }
 
-
+.btnCenter {
+  display: block;
+  text-align: center;
+  ion-button {
+    margin: 5px;
+  }
+}

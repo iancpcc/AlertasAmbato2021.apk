@@ -8,7 +8,7 @@ export class ValidacionesService {
 
   constructor() { }
 
-  soloLetras="[A-Za-z ]*"
+  soloLetras="[a-zA-ZÀ-ÿ\u00f1\u00d1 ]*"
   soloNumeros="[0-9]*"
 
   contraseniasIguales(){

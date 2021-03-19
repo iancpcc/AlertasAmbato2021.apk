@@ -1,10 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PushService } from '../../services/push.service';
-import { ToastController, NavController, PopoverController, IonItemSliding } from '@ionic/angular';
+import { ToastController, NavController, PopoverController, IonItemSliding, IonInput } from '@ionic/angular';
 import { Ciudadano } from '../../models/ciudadano';
 import { PopoverComponent } from '../../components/popover/popover.component';
 import { ContactosService } from 'src/app/services/contactos.service';
 import { RegistroService } from '../../services/registro.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { ValidacionesService } from '../../services/validaciones.service';
+import { CiudadanoService } from '../../services/ciudadano.service';
 
 @Component({
   selector: 'app-perfil',
@@ -12,34 +16,112 @@ import { RegistroService } from '../../services/registro.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-cambioComponente:string="perfil"
-@ViewChild('ionSliding') ionSliding:IonItemSliding
-contactos:any[]=[]
-ciudadano:Ciudadano= new Ciudadano()
-  constructor(public push:PushService,
+  cambioComponente: string = "perfil"
+  @ViewChild('ionSliding') ionSliding: IonItemSliding
+  @ViewChild('email') emailInput: IonInput
+  @ViewChild('direccion') direccionInput: IonInput
+  @ViewChild('telefono') telefonoInput: IonInput
+
+
+  contactos: any[] = []
+  ciudadano: Ciudadano = new Ciudadano()
+  cargandoGeo = false;
+  isEditando = false;
+  isEditandoUbicacion = false;
+  constructor(public push: PushService,
     public toastController: ToastController,
     private navCtrl: NavController,
     public popoverController: PopoverController,
-    private contactsService:ContactosService,
-    private srvRegistro:RegistroService
-    ) { 
-      this.contactos = this.contactsService.contactos;
-      this.ciudadano=  this.srvRegistro.datosCiudadano;
+    private contactsService: ContactosService,
+    private srvCiudadano: CiudadanoService,
+    private srvRegistro: RegistroService,
+    private geolocation: Geolocation,
+    private formBuilder: FormBuilder,
+  ) {
+    this.contactos = this.contactsService.contactos;
+    this.ciudadano = this.srvRegistro.datosCiudadano;
+
+  }
+
+  miformulario: FormGroup = this.formBuilder.group({
+    cedula: [this.ciudadano.cedula, [Validators.required],],
+    telefono: [this.ciudadano.telefono, Validators.required],
+    direccion: [this.ciudadano.direccion],
+    ubicacion: this.formBuilder.group({
+      coordinates: [this.ciudadano.ubicacion.coordinates, [Validators.required]],
+      type: ['Point']
+    }),
+    email: [this.ciudadano.email, [Validators.required, Validators.email]],
+  }
+  )
+
+  ngOnInit() {
+    this.miformulario.reset(this.ciudadano);
+  }
+  segmentChanged(event: any) {
+    this.cambioComponente = event.detail.value;
+  }
+
+  editarCampos(event: IonInput) {
+    this.isEditando = true;
+    if (event.name == "ubicacion") {
+      return;
+    }
+    event.readonly = false;
+  }
+
+  async actualizar() {
+    const { direccion, ubicacion, email, telefono } = this.miformulario.controls;
+
+    const ciudadano = new Ciudadano();
+    ciudadano.id = this.ciudadano.id;
+    ciudadano.ubicacion = ubicacion.value;
+
+    if (direccion.dirty) {
+      ciudadano.direccion = direccion.value.toString().trim();
     }
 
-     async ngOnInit() {
-      //  this.ciudadano = await this.srvRegistro.getUserData();
-  }
-  segmentChanged(event:any){
-    this.cambioComponente=event.detail.value;
+    if (email.dirty) {
+      ciudadano.email = email.value.toString().trim();
+    }
+    if (telefono.dirty) {
+      ciudadano.telefono = telefono.value.toString().trim();
+    }
+
+    if (this.miformulario.valid && this.miformulario.dirty) {
+      this.isEditando = false;
+      try {
+        const response = await this.srvCiudadano.actualizarUsuario(ciudadano);
+        if (response) {
+          if (email.dirty) {
+            this.presentToast('Se ha actualizado los datos, Inicie sesión nuevamente');
+            this.exit();
+            return;
+          }
+          this.presentToast('Se ha actualizado los datos');
+          this.ciudadano = response;
+          this, this.miformulario.reset(this.ciudadano);
+        }
+
+      } catch (error) {
+        console.log('Error', error);
+        this.presentToast('Error al actualizar los datos');
+      }
+
+    }
+    else {
+      this.presentToast('No ha hecho cambios');
+    }
+
+
   }
 
-  
-  async presentToast(mensaje:string) {
+
+  async presentToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
-      color:"primary",
-      position:"middle",
+      color: "secondary",
+      position: "middle",
       duration: 2000
     });
     toast.present();
@@ -49,39 +131,71 @@ ciudadano:Ciudadano= new Ciudadano()
     const popover = await this.popoverController.create({
       component: PopoverComponent,
       translucent: true,
-      animated:true,
-      backdropDismiss:false,
+      animated: true,
+      backdropDismiss: false,
     });
     await popover.present();
-    const datos=  await popover.onDidDismiss()
-    if(datos.data!=undefined){
+    const datos = await popover.onDidDismiss()
+    if (datos.data != undefined) {
       this.agregarContacto(datos)
     }
   }
 
-   async agregarContacto(datos:any){
-    const guardadoOk=  await this.contactsService.guardarContacto(datos.data);
-    if(!guardadoOk){
+  async agregarContacto(datos: any) {
+    const guardadoOk = await this.contactsService.guardarContacto(datos.data);
+    if (!guardadoOk) {
       this.presentToast("Solo se permiten agregar máximo 5 contactos");
       return
     }
   }
 
-  async eliminar(numero:string){
+  async eliminar(numero: string) {
     this.contactos = await this.contactsService.eliminarContacto(numero);
   }
 
-  async abrirSlide(ion:IonItemSliding){
-     ion.open("end");
+  async abrirSlide(ion: IonItemSliding) {
+    ion.open("end");
   }
-  async eliminarTodo(){
+  async eliminarTodo() {
     await this.contactsService.eliminarTodo();
-    this.contactos =  [];
+    this.contactos = [];
   }
 
-  exit(){
-    this.navCtrl.navigateRoot('login', {animated: true});
+  exit() {
+    this.navCtrl.navigateRoot('login', { animated: true });
     this.srvRegistro.logout();
+  }
+
+
+  obtenerPosicion() {
+    const options = {
+      enableHighAccuracy: true,
+      timeout: 10000
+    };
+    this.cargandoGeo = true;
+    this.geolocation.getCurrentPosition(options).then((resp) => {
+      this.ciudadano.ubicacion.coordinates = [resp.coords.latitude, resp.coords.longitude];
+      this.cargandoGeo = false;
+
+    }, (error) => {
+      this.cargandoGeo = false;
+    }
+
+    ).catch((error) => {
+      this.cargandoGeo = false;
+    }
+
+    );
+
+
+  }
+
+  cancelar() {
+    this.emailInput.readonly = true;
+    this.direccionInput.readonly = true;
+    this.telefonoInput.readonly = true;
+    this.isEditando = false;
+    this.isEditandoUbicacion = false;
   }
 
 }
