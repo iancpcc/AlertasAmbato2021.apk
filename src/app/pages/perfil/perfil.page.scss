@@ -24,10 +24,19 @@ ion-card ion-avatar {
   height: 100px;
   margin-left: 20px;
 }
-ion-card ion-card-subtitle {
+ion-card {
+  ion-card-header{
+    margin: auto;
+    display: block;
+  }
+
+ion-card-subtitle {
   font-size: 25px;
   width: 80%;
+  display: block;
   text-align: center !important;
+}
+
 }
 ion-card ion-avatar img {
   width: 100px;

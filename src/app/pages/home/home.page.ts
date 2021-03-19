@@ -74,7 +74,6 @@ export class HomePage implements OnInit {
       const respuesta: any = await this.registerService.enviarNotificacionAyuda(this.ciudadano.id, this.objecto)
 
       this.alert.dismiss();
-      console.log('RespuestaÑ',respuesta);
       if (respuesta.error && respuesta.response) {
        await this.presentAlert('No se han encontrado dispositivos cercanos!!', "Aviso");
        setTimeout(() => {

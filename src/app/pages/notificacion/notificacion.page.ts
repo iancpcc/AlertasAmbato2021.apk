@@ -41,7 +41,7 @@ coordenadas=[];
       })
     }
    async ionViewWillEnter(){
-      const sms= await this.pushService.cargarMensajes2();
+      const sms= await this.pushService.cargarMensajes();
       this.notificacion=sms[0];
       this.ciudadano.nombre=this.notificacion.payload.additionalData.nombre;
       this.ciudadano.apellido=this.notificacion.payload.additionalData.apellido

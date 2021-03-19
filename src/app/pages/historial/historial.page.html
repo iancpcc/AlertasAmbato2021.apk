@@ -11,8 +11,10 @@
         </ion-button>
     </ion-list-header>
   </ion-list>
+  <!-- Mensaje -->
   <span class="ion-text-center tituto" *ngIf="notificaciones.length ===0" ><h6>No hay notificaciones</h6></span>
-      <ion-item *ngFor="let item of notificaciones,let i= index" (click)="disteClick(i)">
+<!-- Lista historial -->
+      <ion-item *ngFor="let item of notificaciones,let i= index" (click)="usuarioHistorial(i)">
         <ion-label >
           <h2 class="ion-font">{{item.payload.additionalData["nombre"]}} {{item.payload.additionalData["apellido"]}}</h2>
           <p>{{item.fecha}} {{item.hora}}</p>

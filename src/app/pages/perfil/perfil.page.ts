@@ -109,7 +109,6 @@ export class PerfilPage implements OnInit {
       } catch (error) {
         this.isEditandoUbicacion=false;
         this.isEditando=false;
-        console.log('Error', error);
         this.presentToast('Error al actualizar los datos');
       }
 

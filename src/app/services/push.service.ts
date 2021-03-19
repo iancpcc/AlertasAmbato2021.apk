@@ -2,7 +2,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { OneSignal, OSNotification, OSNotificationPayload } from '@ionic-native/onesignal/ngx';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-//
 import { environment } from '../../environments/environment';
 import { AdditionalData } from '../models/notify';
 
@@ -15,7 +14,7 @@ export class PushService {
     private storage:Storage,
     private navCtrl: NavController,
    ) {
-      this.cargarMensajes2();
+      this.cargarMensajes();
       this.obtenerTokenDipositivo();
     }
     clave_ID='';
@@ -33,12 +32,12 @@ export class PushService {
       this.oneSignal.startInit('6ef9203e-3222-403f-8684-36014672776b', '646345574677');
       this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
       this.oneSignal.handleNotificationReceived().subscribe((sms) => {
-         this.notificaionRecibida2(sms);
+         this.notificaionRecibida(sms);
 
       });
 
       this.oneSignal.handleNotificationOpened().subscribe(async(sms) => {
-        await this.notificaionRecibida2(sms.notification);
+        await this.notificaionRecibida(sms.notification);
       this.navCtrl.navigateRoot('tabs/noty', {animated: true});
       });
 
@@ -58,10 +57,9 @@ export class PushService {
     return this.clave_ID;
    }
 
-   async notificaionRecibida2(noti:OSNotification){
-     await this.cargarMensajes2();
+   async notificaionRecibida(noti:OSNotification){
+     await this.cargarMensajes();
     const payload=noti.payload;
-    console.log("PayLoad:",payload)
     const existePush=this.arrayMensajes.find(sms=>sms.payload.notificationID === payload.notificationID)|| false;
     if(existePush){
       return;
@@ -74,9 +72,7 @@ export class PushService {
     this.arrayMensajes.unshift(this.notificacion);
     this.pushListener3.emit(this.notificacion);
     this.pushListener2.emit(this.notificacion);
-   await  this.guardarMensajes2();
-  
-
+    await  this.guardarMensajes();
    }
 
    async obtenerFechayHoraActuales(){
@@ -87,28 +83,28 @@ export class PushService {
 
 
 
-  async getMensajes2(){
-  await this.cargarMensajes2();
+  async getMensajes(){
+  await this.cargarMensajes();
     return [...this.arrayMensajes];
   }
 
   
- async guardarMensajes2(){
-   return await this.storage.set('notification2', this.arrayMensajes);
+ async guardarMensajes(){
+   return await this.storage.set('notification', this.arrayMensajes);
   }
 
 
   //Cargar Mensajes
    
-    async cargarMensajes2(){
-      this.arrayMensajes = await this.storage.get('notification2') || []; 
+    async cargarMensajes(){
+      this.arrayMensajes = await this.storage.get('notification') || []; 
       return this.arrayMensajes;
      }
 
      //Fin cargar Mensajes
     async vaciarLocalStorage(){
     // this.arrayMensajes=[];
-     return await this.storage.remove('notification2');
+     return await this.storage.remove('notification');
 
    }
 

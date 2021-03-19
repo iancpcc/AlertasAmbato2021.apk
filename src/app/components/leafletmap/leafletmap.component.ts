@@ -11,14 +11,12 @@ export class LeafletmapComponent implements OnInit {
   @ViewChild('map',{static: true}) mapContainer: ElementRef;
   @Input() coordenadas:number[];
   constructor(private appref:ApplicationRef) { }
-  ubicaciones:number[]=[-1.2665638,-78.6342841]
+  ubicaciones:number[]=[0,0]
 ngOnInit() {
-  // console.log('Esto llega esto',this.coordenadas,);
   this.cargarMapa();
  
   }
   async ionViewWillEnter(){
-  // console.log('Esto llega esto',this.coordenadas,);
     this.cargarMapa();
   }
 
@@ -40,15 +38,5 @@ ngOnInit() {
     this.map.remove();
   }
   
-  // ionViewWillEnter(){
-  //   this.cargarMapa();
-  // }
-
-  //  ionViewDidEnter(){
-  //   this.cargarMapa();
-  //   // console.log('thiscoordenadas ionwill:', this.coordenadas);
-  //  }
-  
-
 
 }

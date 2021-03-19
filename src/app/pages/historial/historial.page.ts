@@ -17,7 +17,6 @@ export class HistorialPage implements OnInit {
   mensaje:OSNotificationPayload[]=[]
 
   notificaciones:AdditionalData[]=[]
-  valor=[1,2,3,4]
  
   ciudadano:Ciudadano=new Ciudadano();
   
@@ -30,21 +29,18 @@ export class HistorialPage implements OnInit {
 
   }
 
-
-
  async eliminar(){
       await this.pushService.vaciarLocalStorage();  
        this.notificaciones=[];
   }
 
   async ionViewWillEnter(){
-    this.notificaciones= await this.pushService.getMensajes2();
+    this.notificaciones= await this.pushService.getMensajes();
   }
 
-  disteClick(index){
+  usuarioHistorial(index){
     this.ciudadano.ubicacion=new Ubicacion();
     var noty=this.notificaciones[index];
-    console.log('noty:',noty);
     this.ciudadano.nombre=noty.payload.additionalData.nombre;
     this.ciudadano.apellido=noty.payload.additionalData.apellido
     this.ciudadano.telefono=noty.payload.additionalData.telefono

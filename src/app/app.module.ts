@@ -8,25 +8,26 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { RegisterPageModule } from './pages/register/register.module';
-import { HomePageModule } from './pages/home/home.module';
-
+//OneSignal
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import { IonicStorageModule } from '@ionic/storage';
+//
+//Servicios
 import { PushService } from './services/push.service';
+import { RegistroService } from './services/registro.service';
+import { ContactosService } from './services/contactos.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+//Paginas
+import { RegisterPageModule } from './pages/register/register.module';
+import { LoginPageModule } from './pages/login/login.module';
+
 
 //HTTP
 import { HttpClientModule } from '@angular/common/http';
-//clipboard
-import { HistorialPageModule } from './pages/historial/historial.module';
-import { LoginPageModule } from './pages/login/login.module';
+//Otros
 import { NativeGeocoder,} from '@ionic-native/native-geocoder/ngx';
-import { RegistroService } from './services/registro.service';
-import { PerfilPageModule } from './pages/perfil/perfil.module';
+import { IonicStorageModule } from '@ionic/storage';
+
 import { LoginGuard } from './guards/login.guard';
-import { NotificacionPageModule } from './pages/notificacion/notificacion.module';
-import { ContactosService } from './services/contactos.service';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -35,10 +36,6 @@ import { ContactosService } from './services/contactos.service';
     BrowserModule,
     RegisterPageModule,
     LoginPageModule,
-    PerfilPageModule,
-    HomePageModule,
-    NotificacionPageModule,
-    HistorialPageModule,
     IonicModule.forRoot(), 
     AppRoutingModule,
     IonicStorageModule.forRoot()],
