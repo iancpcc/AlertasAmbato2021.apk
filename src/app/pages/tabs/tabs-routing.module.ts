@@ -6,6 +6,7 @@ import { HomePage } from '../home/home.page';
 import { PerfilPage } from '../perfil/perfil.page';
 import { HistorialPage } from '../historial/historial.page';
 import { NotificacionPage } from '../notificacion/notificacion.page';
+import { HomePageModule } from '../home/home.module';
 
 
 const routes: Routes = [
@@ -19,18 +20,17 @@ const routes: Routes = [
     component: TabsPage,
     children:[
       {path: 'home',
-      component:HomePage
+      component:HomePage,
        },
 
        {path: 'perfil',
-      component: PerfilPage
+       component:PerfilPage
       },
        {path: 'history',
-      component: HistorialPage
+       component:HistorialPage
       },
-      
       {path: 'noty',
-      component: NotificacionPage
+      component:NotificacionPage
       },
       
     ]

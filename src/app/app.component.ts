@@ -19,10 +19,10 @@ export class AppComponent {
   ) {
     this.initializeApp();
   }
-  initializeApp() {
 
-    this.platform.ready().then(() => {
-      this.push.configuracionPush();
+   initializeApp() {
+     this.platform.ready().then( () => {
+       this.push.configuracionPush();
       this.statusBar.styleLightContent();
         this.splashScreen.hide();
         this.backbuttonSubscribeMethod();

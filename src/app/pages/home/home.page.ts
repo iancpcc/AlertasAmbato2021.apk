@@ -1,10 +1,11 @@
-import { Component, OnInit, EventEmitter, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { PushService } from '../../services/push.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { RegistroService } from '../../services/registro.service';
 import { Ciudadano } from '../../models/ciudadano';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { ContactosService } from '../../services/contactos.service';
+import { CiudadanoService } from '../../services/ciudadano.service';
 
 @Component({
   selector: 'app-home',
@@ -16,27 +17,33 @@ export class HomePage implements OnInit {
   @ViewChild("imgPanic") imgPanic: ElementRef
   
   constructor(public push: PushService,
-    private registerService: RegistroService,
     private srvContantos: ContactosService,
     private geolocation: Geolocation,
     private alertController: AlertController,
     private renderer: Renderer2,
+    public srvCiudadano: CiudadanoService,
+    private navCtrl: NavController
+  
   ) {
-  //  this.ciudadano = this.registerService.datosCiudadano;
   }
-  ciudadano: Ciudadano = new Ciudadano();
+  ciudadano: Ciudadano ;
   cargandoGeo = false;
   objecto: any = { lat: 0, long: 0, radio: 0, telefono: [] }
   alert: any;
   radio: number = 200;
   buscarPosicion: boolean
 
-   ngOnInit() {
-    this.ciudadano =   this.registerService.ciudadanoInfo|| new Ciudadano();
+    ngOnInit() {
+    this.ciudadano =   this.srvCiudadano.ciudadanoInfo ;
+    // if(!this.ciudadano){
+    //  await this.presentAlert("Inicie sesión nuevamente","Usuario no econtrado");
+    //  this.navCtrl.navigateRoot('login', {animated: true});
+    // }
+
   }
 
   ionViewWillEnter(){
-    this.ciudadano =   this.registerService.ciudadanoInfo || new Ciudadano();;
+    this.ciudadano =   this.srvCiudadano.ciudadanoInfo || new Ciudadano();;
   }
 
   async presentAlert(mensaje: string, title: string, message?: string) {
@@ -71,7 +78,7 @@ export class HomePage implements OnInit {
 
       await this.presentAlert("Enviando Señal de auxilio", "Aviso");
 
-      const respuesta: any = await this.registerService.enviarNotificacionAyuda(this.ciudadano.id, this.objecto)
+      const respuesta: any = await this.srvCiudadano.enviarNotificacionAyuda(this.ciudadano.id, this.objecto)
 
       this.alert.dismiss();
       if (respuesta.error && respuesta.response) {

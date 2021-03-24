@@ -21,15 +21,14 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('../app/pages/tabs/tabs.module').then(m => m.TabsPageModule),
-    canActivate:[LoginGuard]
-
+    canLoad:[LoginGuard]
   },
   
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'corrected' })
   ],
   exports: [RouterModule]
 })

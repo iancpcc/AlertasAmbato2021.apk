@@ -6,8 +6,7 @@ import { PopoverComponent } from '../../components/popover/popover.component';
 import { ContactosService } from 'src/app/services/contactos.service';
 import { RegistroService } from '../../services/registro.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { ValidacionesService } from '../../services/validaciones.service';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { CiudadanoService } from '../../services/ciudadano.service';
 
 @Component({
@@ -39,8 +38,7 @@ export class PerfilPage implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.contactos = this.contactsService.contactos;
-    this.ciudadano = this.srvRegistro.datosCiudadano;
-
+    this.ciudadano = this.srvCiudadano.ciudadanoInfo;
   }
 
   miformulario: FormGroup = this.formBuilder.group({
@@ -103,7 +101,7 @@ export class PerfilPage implements OnInit {
           this.isEditando=false;
           this.ciudadano = response;
           this.miformulario.reset(this.ciudadano);
-          this.srvRegistro.ciudadanoInfoset=this.ciudadano;
+          this.srvCiudadano.ciudadanoInfoset=this.ciudadano;
         }
 
       } catch (error) {

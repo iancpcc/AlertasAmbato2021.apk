@@ -3,6 +3,7 @@ import {  Usuario } from '../../models/ciudadano';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { RegistroService } from '../../services/registro.service';
 import { NgForm } from '@angular/forms';
+import { CiudadanoService } from '../../services/ciudadano.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class LoginPage implements OnInit {
   ubicacion:string;
   loading:HTMLIonLoadingElement;
   constructor(private navCtrl: NavController,
-    private service:RegistroService,
+    private srvCiudadano:CiudadanoService,
+    private srvRegistro:RegistroService,
     private alertController:AlertController,
     public loadingController: LoadingController ) { 
     }
@@ -38,10 +40,10 @@ export class LoginPage implements OnInit {
     if(form.invalid){return}
      await this.presentLoading();
     try {
-      var valido= await this.service.loguearse(this.ciudadano);
+      var valido= await this.srvRegistro.loguearse(this.ciudadano);
       if(valido){
         this.loading.dismiss();
-        await this.service.getUserData();
+        await this.srvCiudadano.getUserData();
         this.navCtrl.navigateRoot('tabs', {animated: true});
       }
       

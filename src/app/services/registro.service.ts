@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Ciudadano, Usuario } from '../models/ciudadano';
 import { PushService } from './push.service';
 import { Storage } from '@ionic/storage';
@@ -14,7 +14,6 @@ export class RegistroService {
   private url = environment.url_services;
   userToken = ""
   contactos: [] = []
-  datosCiudadano: Ciudadano = new Ciudadano()
 
   constructor(private http: HttpClient,
     private push: PushService,
@@ -23,14 +22,7 @@ export class RegistroService {
     this.cargarContactos();
   }
 
-  get ciudadanoInfo(){
-    return {...this.datosCiudadano};
-  }
-
-  set ciudadanoInfoset(ciudadano: Ciudadano){
-    this.datosCiudadano = ciudadano;
-  }
-
+  
   async registrar(ciudadano: Ciudadano) {
     const token = await this.push.obtenerTokenDipositivo();
     ciudadano.token = token;
@@ -40,25 +32,6 @@ export class RegistroService {
   async cargarContactos() {
     this.contactos = await this.storage.get('contactos') || [];
     return this.contactos;
-  }
-
-  async getUserData() {
-    try {
-      this.userToken = await this.obtenerTokenUsuario();
-      if (this.userToken) {
-        const header = new HttpHeaders({
-          'Content-Type': 'application/json',
-          "userToken": this.userToken
-        });
-        const response = await this.http.get<Ciudadano>(`${this.url}/usuarios/infoUsuario`, { headers: header }).toPromise();
-        this.datosCiudadano = response["data"];
-        await this.guardarInfoCiudadano();
-        return this.datosCiudadano;
-      }
-    } catch (error) {
-      this.clearStorage();
-      this.push.configuracionPush();
-    }
   }
 
 
@@ -88,30 +61,17 @@ export class RegistroService {
     await this.storage.set('userToken', token);
   }
 
-  async guardarInfoCiudadano (){
-    await this.storage.set("ciudadano",this.datosCiudadano);
-  } 
+  // async guardarInfoCiudadano (){
+  //   await this.storage.set("ciudadano",this.datosCiudadano);
+  // } 
   
-  async obtenerInfoCiudadano (){
-    this.datosCiudadano= await this.storage.get("ciudadano");
-    return this.datosCiudadano;
-  }
 
-  async obtenerTokenUsuario() {
-    this.userToken = await this.storage.get('userToken')
-    return this.userToken;
-  }
 
   logout() {
     this.storage.remove("userToken")
   }
   
-  clearStorage() {
-    this.storage.clear();
-  }
   
-  async enviarNotificacionAyuda(id: number, object: string) {
-    return await this.http.post(`${this.url}/sendNotification/${id}`, object).toPromise();
-  }
+ 
 
 }

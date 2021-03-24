@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
-import { RegistroService } from '../services/registro.service';
+import { CanLoad } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { CiudadanoService } from '../services/ciudadano.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginGuard implements CanActivate {
+export class LoginGuard implements CanLoad {
 
-  constructor(private navctrl:NavController,private srvRegistro:RegistroService){
+  constructor(private navctrl:NavController,private srvCiudadano:CiudadanoService){
   }
-  async canActivate():Promise<boolean>{
-    const userdata = await this.srvRegistro.getUserData();
+  async canLoad():Promise<boolean>{
+    const userdata =  await this.srvCiudadano.getUserData();
     if( userdata){
       return true;
     }

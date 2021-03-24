@@ -28,6 +28,7 @@ import { NativeGeocoder,} from '@ionic-native/native-geocoder/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { LoginGuard } from './guards/login.guard';
+import { CiudadanoService } from './services/ciudadano.service';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -47,6 +48,7 @@ import { LoginGuard } from './guards/login.guard';
     PushService,
     RegistroService,
     ContactosService,
+    CiudadanoService,
     StatusBar,
     LoginGuard,
     SplashScreen,
