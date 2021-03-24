@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { PushService } from '../../services/push.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { RegistroService } from '../../services/registro.service';
 import { Ciudadano } from '../../models/ciudadano';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController} from '@ionic/angular';
 import { ContactosService } from '../../services/contactos.service';
 import { CiudadanoService } from '../../services/ciudadano.service';
 
@@ -22,8 +21,6 @@ export class HomePage implements OnInit {
     private alertController: AlertController,
     private renderer: Renderer2,
     public srvCiudadano: CiudadanoService,
-    private navCtrl: NavController
-  
   ) {
   }
   ciudadano: Ciudadano ;
@@ -35,10 +32,6 @@ export class HomePage implements OnInit {
 
     ngOnInit() {
     this.ciudadano =   this.srvCiudadano.ciudadanoInfo ;
-    // if(!this.ciudadano){
-    //  await this.presentAlert("Inicie sesión nuevamente","Usuario no econtrado");
-    //  this.navCtrl.navigateRoot('login', {animated: true});
-    // }
 
   }
 
