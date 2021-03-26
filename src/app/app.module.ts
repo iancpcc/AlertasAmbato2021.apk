@@ -43,14 +43,10 @@ import { CiudadanoService } from './services/ciudadano.service';
     
   providers: [
     NativeGeocoder,
+    CiudadanoService,
     OneSignal,
     Geolocation,
-    PushService,
-    RegistroService,
-    ContactosService,
-    CiudadanoService,
     StatusBar,
-    LoginGuard,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

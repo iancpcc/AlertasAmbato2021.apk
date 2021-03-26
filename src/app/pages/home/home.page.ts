@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
   alert: any;
   radio: number = 200;
   buscarPosicion: boolean
-
+  tiempo='1'
     ngOnInit() {
     this.ciudadano =   this.srvCiudadano.ciudadanoInfo ;
 

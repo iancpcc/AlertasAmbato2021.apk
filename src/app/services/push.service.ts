@@ -33,7 +33,6 @@ export class PushService {
       this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
       this.oneSignal.handleNotificationReceived().subscribe((sms) => {
          this.notificaionRecibida(sms);
-
       });
 
       this.oneSignal.handleNotificationOpened().subscribe(async(sms) => {
@@ -53,7 +52,7 @@ export class PushService {
   }
   
   async obtenerTokenDipositivo(){
-    this.clave_ID = await this.storage.get('tokenDevice') || '';
+    this.clave_ID = await this.storage.get('tokenDevice') || null;
     return this.clave_ID;
    }
 

@@ -9,10 +9,8 @@ const routes: Routes = [
     path: '', pathMatch: 'full', redirectTo: 'tabs'
   },
    {
-     
     path: 'login', 
    component:LoginPage
-
   },
   {
     path: 'register', 
@@ -20,7 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: () => import('../app/pages/tabs/tabs.module').then(m => m.TabsPageModule),
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule),
     canLoad:[LoginGuard]
   },
   

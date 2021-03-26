@@ -15,8 +15,8 @@ userToken = ""
   constructor(private http:HttpClient,
               private storage: Storage,
               private push: PushService,
-
               ) { 
+                
               }
 
 async actualizarUsuario(ciudadano:Ciudadano){
@@ -26,6 +26,7 @@ async actualizarUsuario(ciudadano:Ciudadano){
 async getUserData() {
   try {
     this.userToken = await this.obtenerTokenUsuario() || null;
+    // this.userToken = this.userToken;
     if (this.userToken) {
       const header = new HttpHeaders({
         'Content-Type': 'application/json',

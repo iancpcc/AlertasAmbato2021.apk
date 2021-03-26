@@ -5,7 +5,7 @@ import { PushService } from './push.service';
 import { Storage } from '@ionic/storage';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { throwError } from 'rxjs/';
 import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
@@ -37,8 +37,7 @@ export class RegistroService {
 
   //TODO:Quitar token
   async loguearse(user: Usuario) {
-    user.tokenDispositivo = this.push.clave_ID || "b8ebde51-efea-486b-b47d-52efd0c2ceaa";
-    // user.tokenDispositivo = this.push.clave_ID || "";
+    user.tokenDispositivo = await this.push.obtenerTokenDipositivo()|| null;
     return await this.http.post(`${this.url}/auth/login`, user)
       .pipe(
         map(
@@ -60,11 +59,6 @@ export class RegistroService {
   async guardarTokenUsuario(token: string) {
     await this.storage.set('userToken', token);
   }
-
-  // async guardarInfoCiudadano (){
-  //   await this.storage.set("ciudadano",this.datosCiudadano);
-  // } 
-  
 
 
   logout() {
